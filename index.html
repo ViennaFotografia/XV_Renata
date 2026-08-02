@@ -24,7 +24,7 @@
             --color-fondo: #EAE0C8;
             --color-fondo-seccion: #f9f9f9;
             --fuente-titulos: 'Carattere', cursive;
-            --fuente-nombres: 'Bellefair', serif;
+            --fuente-nombres: 'Bellefair', bold, serif;
             --fuente-texto: 'Cormorant Garamond', serif;
         }
 
@@ -118,10 +118,9 @@
 
         .nombres-familiares {
             font-family: var(--fuente-nombres);
-            font-size: 1.8rem; /* Letra más grande */
+            font-size: 2rem; /* Letra más grande */
             color: #B38728; /* Color dorado, extraído del SVG del título */
             line-height: 1.5;
-            font-weight: bold; /* Letra en negrita */
             text-shadow: 1px 1px 3px rgba(0,0,0,0.4); /* Sombra sutil para dar profundidad */
         }
 
@@ -134,7 +133,7 @@
         }
 
         p, label, input, .texto {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             line-height: 1.6;
         }
 
@@ -362,9 +361,24 @@
             font-size: 100px;
             fill: url(#superDorado);
             stroke: url(#bordeDorado);
-            stroke-width: 3px;
+            stroke-width: 2px;
             filter: url(#sombraBrillante);
             text-anchor: middle;
+        }
+        .texto-3
+        {
+            font-family: 'Great Vibes', cursive, sans-serif;
+            font-size: 70px;
+            fill: url(#superDorado);
+            stroke: url(#bordeDorado);
+            stroke-width: 1px;
+            filter: url(#sombraBrillante);
+            text-anchor: middle;
+        }
+        .blanco {
+            color:#fff;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 2px rgba(0,0,0,0.8);
         }
     </style>
 </head>
@@ -536,10 +550,10 @@
     
                         <!-- Los textos -->
                         <text x="400" y="200" class="texto-xv">Con la bendicion</text>
-                        <text x="400" y="350" class="texto-xv">de mis papas</text>
+                        <text x="400" y="350" class="texto-xv">de mis papás</text>
                     </svg>
                 <img class="separador-decorativo animate-on-scroll" src="1_separador.webp" alt="separador">
-                <p class="texto nombres-familiares animate-on-scroll">Luis Sanchez<br>&<br>Yadira Zavala</p>
+                <p class="blanco nombres-familiares animate-on-scroll">Luis Sanchez<br>&<br>Yadira Zavala</p>
                 
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="100%">
                     <defs>
@@ -569,7 +583,7 @@
                     <text x="400" y="150" class="texto-2">Padrinos</text>
                 </svg>
                 <img class="separador-decorativo animate-on-scroll" src="1_separador.webp" alt="separador">
-                <p class="texto nombres-familiares animate-on-scroll">Luz Negrete<br>&<br>Rafael Negrete</p>
+                <p class="nombres-familiares animate-on-scroll">Luz Negrete<br>&<br>Rafael Negrete</p>
             </section>
 
             <!-- Flores decorativas laterales -->
@@ -794,7 +808,7 @@
                     </defs>
 
                     <!-- Los textos -->
-                    <text x="400" y="150" class="texto-2">Lluvia de Sobres</text>
+                    <text x="400" y="150" class="texto-3">Lluvia de Sobres</text>
                 </svg>
                 <p class="texto">Es la tradición de regalar dinero en efectivo dentro de un sobre.</p>
 
