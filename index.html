@@ -33,8 +33,7 @@
             padding: 0;
             font-family: var(--fuente-texto);
             text-align: center;
-            overflow-x: hidden;
-            /* El scroll vertical se bloqueará/desbloqueará con JS */
+            /* overflow-x: hidden se movió al .container para evitar problemas de doble scroll */
         }
 
         /* Nuevo contenedor para la imagen de fondo */
@@ -55,6 +54,7 @@
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.2); /* Borde difuminado más pronunciado */
             position: relative;
             overflow-x:hidden;
+            overflow-y: hidden;
         }
 
         /* Decoración de flores en las esquinas y lados */
