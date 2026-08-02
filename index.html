@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis XV - Ruxely Torres</title>
+    
+    <!-- Fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bellefair&family=Carattere&family=Cormorant+Garamond:wght@700&family=Old+Standard+TT&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Variables y Estilos Generales */
+        :root {
+            /* Tema Plata/Azul basado en el ejemplo */
+            --color-principal: #b0b0b0; /* Tono plateado */
+            --color-rojo-pastel: #C51A1A; /* Un rojo más intenso y menos rosado */
+            --color-crema-claro: #FFF8E1;
+            --color-secundario: #809eff; /* Azul claro para acentos */ 
+            --color-texto-botones: #dcfcf9; /* Blanco azulado */
+            --color-texto: #333;
+            --color-fondo: #EAE0C8;
+            --color-fondo-seccion: #f9f9f9;
+            --fuente-titulos: 'Carattere', cursive;
+            --fuente-nombres: 'Bellefair', serif;
+            --fuente-texto: 'Cormorant Garamond', serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--fuente-texto);
+            text-align: center;
+            overflow-x: hidden;
+            /* El scroll vertical se bloqueará/desbloqueará con JS */
+        }
+
+        /* Nuevo contenedor para la imagen de fondo */
+        .background-container {
+            background-image: url('fondo.png');
+            background-size: 100% auto; /* Ajusta al ancho y permite repetir */
+            background-position: top center; /* Empieza desde arriba */
+            padding: 20px; /* Este es el espacio que crea el efecto de marco */
+            background-repeat: repeat-y; /* Repite verticalmente para un scroll "infinito" */
+        }
+
+        /* Contenedor principal (estilo móvil) */
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(234, 224, 200, 0.95); /* Fondo casi opaco para legibilidad */
+            border-radius: 20px; /* Esquinas redondeadas */
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2); /* Borde difuminado más pronunciado */
+            position: relative;
+            overflow-x:hidden;
+        }
+
+        /* Decoración de flores en las esquinas y lados */
+        .corner-flower {
+            position: absolute;
+            width: 90px; /* Tamaño de la flor */
+            height: auto;
+            z-index: 10; /* Para que esté por encima de otros elementos */
+            pointer-events: none; /* Para que no interfiera con clics */
+        }
+        .top-left { top: -25px; left: -25px; }
+        .top-right {
+            top: -25px;
+            right: -25px;
+            transform: scaleX(-1); /* Voltear horizontalmente */
+        }
+        .bottom-left {
+            bottom: -25px;
+            left: -25px;
+            transform: scaleY(-1); /* Voltear verticalmente */
+        }
+        .bottom-right {
+            bottom: -25px;
+            right: -25px;
+            transform: scaleX(-1) scaleY(-1); /* Voltear en ambos ejes */
+        }
+        .side-flower-container {
+            display: flex; 
+            justify-content: space-between; 
+            padding: 0 0; 
+            margin-top: -20px;
+        }
+
+        /* Secciones */
+        section {
+            padding: 25px 20px; /* Espacio reducido entre secciones */
+            position: relative;
+            background-color: transparent; /* Asegura que las secciones no tapen el fondo del contenedor */
+        }
+
+        h1, h2, h3 {
+            font-family: var(--fuente-titulos);
+            color: var(--color-principal);
+            font-weight: normal;
+            text-shadow: 0.5px 0 0.3px #000, -1px 0 1px #000, 0 1px 1px #000, 0 -1px 1px #000; /* Borde definido */
+        }
+
+        h1 { font-size: 4rem; margin: 10px 0; }
+        h2 { font-size: 3rem; margin-bottom: 15px; }
+        h3 { font-size: 2.5rem; letter-spacing: 2px; }
+
+        .person-name {
+            font-family: var(--fuente-nombres);
+            font-size: 1.5rem;
+            color: #555;
+            margin: 0;
+            text-transform: uppercase;
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.5); /* Borde difuminado para el nombre */
+            letter-spacing: 3px;
+        }
+
+        .nombres-familiares {
+            font-family: var(--fuente-nombres);
+            font-size: 1.8rem; /* Letra más grande */
+            color: #B38728; /* Color dorado, extraído del SVG del título */
+            line-height: 1.5;
+            font-weight: bold; /* Letra en negrita */
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.4); /* Sombra sutil para dar profundidad */
+        }
+
+        .name-band-container {
+            background-image: url('banda_ancha.webp');
+            background-size: 100% 100%;
+            background-position: center;
+            padding: 20px 0;
+            margin: 25px -20px; /* Se expande para cubrir el padding de la sección */
+        }
+
+        p, label, input, .texto {
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .separador-decorativo {
+            width: calc(100% + 30px); /* Se expande para cubrir el padding de la sección */
+            height: auto;
+            margin: -10px -20px 15px -20px; /* Margen negativo para pegarse a los bordes */
+        }
+
+        /* Imágenes */
+        .foto-principal {
+            width: 75%;
+            border-radius: 50%;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border: 2px solid var(--color-principal);
+        }
+
+        /* Contenedor para la foto y el marco */
+        .foto-container {
+            position: relative;
+            width: 78%;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .marco-gif {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Asegura que el GIF no se estire */
+            pointer-events: none; /* Para que no interfiera con el clic */
+        }
+
+        /* Botones */
+        .button {
+            display: inline-block;
+            background: var(--color-rojo-pastel);
+            color: var(--color-crema-claro);
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-family: var(--fuente-nombres);
+            font-size: 1.2rem;
+            margin-top: 15px;
+            cursor: pointer;
+            border: none;
+            transition: opacity 0.3s;
+        }
+        .button:hover { opacity: 0.8; }
+
+        /* Contador */
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            padding: 0 10px; /* Añade espacio a los lados */
+        }
+        .segment {
+            background: var(--color-rojo-pastel);
+            color: var(--color-crema-claro);
+            padding: 15px 10px;
+            border-radius: 10px;
+            min-width: 60px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(148, 15, 26, 0.2);
+        }
+        .segment .number { font-size: 1.8rem; font-weight: bold; font-family: var(--fuente-nombres); }
+        .segment .unit { font-size: 0.9rem; text-transform: uppercase; margin-top: 5px; }
+
+        /* Formularios y Cajas de texto */
+        textarea, input[type="text"] {
+            width: 90%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: var(--fuente-texto);
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        textarea { height: 100px; resize: none; }
+        
+        input[type="radio"] {
+            /* Ocultamos el radio button por defecto */
+            opacity: 0;
+            position: fixed;
+            width: 0;
+        }
+
+        .confirmation-options {
+            margin: 20px 0;
+            text-align: left;
+            display: inline-block;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px; /* Espacio entre opciones */
+            cursor: pointer;
+        }
+
+        .radio-label {
+            position: relative;
+            padding-left: 35px; /* Espacio para el círculo personalizado */
+            cursor: pointer;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        /* Círculo exterior del radio button */
+        .radio-label::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--color-rojo-pastel);
+            border-radius: 50%;
+            background-color: #fff;
+        }
+
+        /* Círculo interior (punto) que aparece al seleccionar */
+        input[type="radio"]:checked + .radio-label::after {
+            content: '';
+            position: absolute;
+            left: 6px; /* (22 + 2*2 - 14) / 2 */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: var(--color-rojo-pastel);
+        }
+        /* Estilos de la nueva sección de ubicaciones */
+        .lugar-link {
+            display: block;
+            margin-top: 40px;
+            text-decoration: none;
+            color: var(--color-texto);
+        }
+        .lugar-link img {
+            width: 100%;
+            border-radius: 10px;
+            filter: brightness(0.7); /* Filtro para oscurecer la imagen */
+            margin-bottom: 15px;
+        }
+        .lugar-link .nombre-lugar {
+            font-family: var(--fuente-nombres);
+            font-size: 1.8rem;
+            margin: 0;
+        }
+        .lugar-link .direccion-lugar, .lugar-link .hora-lugar {
+            font-family: var(--fuente-texto);
+            font-size: 1.1rem;
+        }
+        .lugar-link .hora-lugar {
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        /* --- Animaciones al hacer scroll --- */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Animación para flores laterales */
+        .animate-slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px) scaleX(-1);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-slide-in-left.is-visible {
+            opacity: 1;
+            transform: translateX(0) scaleX(-1);
+        }
+        .animate-slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-slide-in-right.is-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Estilo para el ítem del itinerario */
+        .itinerario-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px; /* Espacio entre el ícono y el texto */
+        }
+        .itinerario-icono {
+            width: 60px; /* Tamaño del círculo de fondo */
+            height: 60px;
+            background-color: var(--color-crema-claro); /* Fondo crema, como el botón de play */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .itinerario-icono img {
+            width: 65%; /* Tamaño del ícono negro dentro del círculo */
+            height: 65%;
+        }
+        .texto-2
+        {
+            font-family: 'Great Vibes', cursive, sans-serif;
+            font-size: 100px;
+            fill: url(#superDorado);
+            stroke: url(#bordeDorado);
+            stroke-width: 3px;
+            filter: url(#sombraBrillante);
+            text-anchor: middle;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Nuevo contenedor para el fondo -->
+    <div class="background-container">
+        <div class="container">
+            <!-- Flores decorativas de las esquinas -->
+            <img src="flor2.webp" alt="Decoración floral" class="corner-flower top-left">
+            <img src="flor2.webp" alt="Decoración floral" class="corner-flower top-right">
+            <img src="flor2.webp" alt="Decoración floral" class="corner-flower bottom-left">
+            <img src="flor2.webp" alt="Decoración floral" class="corner-flower bottom-right">
+
+            
+            <!-- MARK: INICIO / PORTADA -->
+            <section id="portada">
+                <!-- Contenedor para el título (SVG + Sombrero) -->
+                <div style="position: relative; width: 95%; margin: 0 auto;" class="animate-on-scroll">
+                    <!-- Sombrero superpuesto -->
+                    <!--img src="sombrero.png" alt="Sombrero de charro" style="position: absolute; top: -80px; left: 50%; transform: translateX(-45%); width: 45%; z-index: 5; pointer-events: none;"-->
+                    
+                    <!-- Título con SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="100%">
+                        <defs>
+                            <!-- Gradiente super brillante (Efecto metálico pulido) -->
+                            <linearGradient id="superDorado" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#BF953F" />     <!-- Oro base -->
+                            <stop offset="30%" stop-color="#FCF6BA" />    <!-- Brillo intenso blanco/amarillo -->
+                            <stop offset="50%" stop-color="#B38728" />    <!-- Sombra del metal -->
+                            <stop offset="75%" stop-color="#FBF5B7" />    <!-- Reflejo secundario -->
+                            <stop offset="100%" stop-color="#AA771C" />   <!-- Borde oscuro inferior -->
+                            </linearGradient>
+    
+                            <!-- Borde dorado para dar más volumen -->
+                            <linearGradient id="bordeDorado" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#5c3805" />
+                            <stop offset="50%" stop-color="#FFEA73" />
+                            <stop offset="100%" stop-color="#5c3805" />
+                            </linearGradient>
+    
+                            <!-- Sombra para que despegue del fondo -->
+                            <filter id="sombraBrillante" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#000000" flood-opacity="0.6"/>
+                            </filter>
+                        </defs>
+    
+                        <style>
+                            /* Como el SVG está directo en el HTML, ahora sí tomará la fuente Great Vibes */
+                            .texto-xv {
+                            font-family: 'Great Vibes', cursive, sans-serif;
+                            font-size: 150px;
+                            fill: url(#superDorado);
+                            stroke: url(#bordeDorado);
+                            stroke-width: 3px;
+                            filter: url(#sombraBrillante);
+                            text-anchor: middle;
+                            }
+                        </style>
+    
+                        <!-- Los textos -->
+                        <text x="400" y="200" class="texto-xv">Mis XV</text>
+                        <text x="400" y="350" class="texto-xv">Años</text>
+                    </svg>
+                </div>
+                          
+                <!-- Contenedor para la foto y el marco -->
+                <div class="foto-container animate-on-scroll">
+                    <!-- Reemplaza src con la ruta a tu foto principal -->
+                    <img class="foto-principal" src="foto_principal.png" alt="Foto de Ruxely">
+                    <img class="marco-gif" src="aro-brillo.gif" alt="Marco brillante">
+                </div>
+                
+                <p class="texto animate-on-scroll" style="font-style: italic; padding: 0 20px;">
+                    "Existen momentos en la vida que imaginamos, soñamos y esperamos, uno de esos momentos ha llegado"
+                </p> 
+                
+                <div class="name-band-container animate-on-scroll">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="100%">
+                        <defs>
+                            <!-- Gradiente super brillante (Efecto metálico pulido) -->
+                            <linearGradient id="superDorado" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#BF953F" />     <!-- Oro base -->
+                            <stop offset="30%" stop-color="#FCF6BA" />    <!-- Brillo intenso blanco/amarillo -->
+                            <stop offset="50%" stop-color="#B38728" />    <!-- Sombra del metal -->
+                            <stop offset="75%" stop-color="#FBF5B7" />    <!-- Reflejo secundario -->
+                            <stop offset="100%" stop-color="#AA771C" />   <!-- Borde oscuro inferior -->
+                            </linearGradient>
+    
+                            <!-- Borde dorado para dar más volumen -->
+                            <linearGradient id="bordeDorado" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#5c3805" />
+                            <stop offset="50%" stop-color="#FFEA73" />
+                            <stop offset="100%" stop-color="#5c3805" />
+                            </linearGradient>
+    
+                            <!-- Sombra para que despegue del fondo -->
+                            <filter id="sombraBrillante" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#000000" flood-opacity="0.6"/>
+                            </filter>
+                        </defs>
+    
+                        <style>
+                            /* Como el SVG está directo en el HTML, ahora sí tomará la fuente Great Vibes */
+                            .texto-xv {
+                            font-family: 'Great Vibes', cursive, sans-serif;
+                            font-size: 150px;
+                            fill: url(#superDorado);
+                            stroke: url(#bordeDorado);
+                            stroke-width: 3px;
+                            filter: url(#sombraBrillante);
+                            text-anchor: middle;
+                            }
+                        </style>
+    
+                        <!-- Los textos -->
+                        <text x="400" y="150" class="texto-xv">Renata</text>
+                    </svg>
+                </div>
+                <h3 class="animate-on-scroll" style="margin-top: 0; color: #B38728;">29 . AGO . 2026</h3>
+                
+                <!-- Contador -->
+                <div class="countdown-container animate-on-scroll">
+                    <div class="segment"><span class="number" id="days">0</span><span class="unit">Días</span></div>
+                    <div class="segment"><span class="number" id="hours">0</span><span class="unit">Horas</span></div>
+                    <div class="segment"><span class="number" id="minutes">0</span><span class="unit">Min</span></div>
+                    <div class="segment"><span class="number" id="seconds">0</span><span class="unit">Seg</span></div>
+                </div>
+            </section>
+
+            <!-- MARK: PADRES Y PADRINOS -->
+            <section>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%">
+                        <defs>
+                            <!-- Gradiente super brillante (Efecto metálico pulido) -->
+                            <linearGradient id="superDorado" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#BF953F" />     <!-- Oro base -->
+                            <stop offset="30%" stop-color="#FCF6BA" />    <!-- Brillo intenso blanco/amarillo -->
+                            <stop offset="50%" stop-color="#B38728" />    <!-- Sombra del metal -->
+                            <stop offset="75%" stop-color="#FBF5B7" />    <!-- Reflejo secundario -->
+                            <stop offset="100%" stop-color="#AA771C" />   <!-- Borde oscuro inferior -->
+                            </linearGradient>
+    
+                            <!-- Borde dorado para dar más volumen -->
+                            <linearGradient id="bordeDorado" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#5c3805" />
+                            <stop offset="50%" stop-color="#FFEA73" />
+                            <stop offset="100%" stop-color="#5c3805" />
+                            </linearGradient>
+    
+                            <!-- Sombra para que despegue del fondo -->
+                            <filter id="sombraBrillante" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#000000" flood-opacity="0.6"/>
+                            </filter>
+                        </defs>
+    
+                        <style>
+                            /* Como el SVG está directo en el HTML, ahora sí tomará la fuente Great Vibes */
+                            .texto-xv {
+                            font-family: 'Great Vibes', cursive, sans-serif;
+                            font-size: 150px;
+                            fill: url(#superDorado);
+                            stroke: url(#bordeDorado);
+                            stroke-width: 3px;
+                            filter: url(#sombraBrillante);
+                            text-anchor: middle;
+                            }
+                        </style>
+    
+                        <!-- Los textos -->
+                        <text x="400" y="200" class="texto-xv">Con la bendicion</text>
+                        <text x="400" y="350" class="texto-xv">de mis papas</text>
+                    </svg>
+                <img class="separador-decorativo animate-on-scroll" src="1_separador.webp" alt="separador">
+                <p class="texto nombres-familiares animate-on-scroll">Luis Sanchez<br>&<br>Yadira Zavala</p>
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="100%">
+                    <defs>
+                        <!-- Gradiente super brillante (Efecto metálico pulido) -->
+                        <linearGradient id="superDorado" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#BF953F" />     <!-- Oro base -->
+                        <stop offset="30%" stop-color="#FCF6BA" />    <!-- Brillo intenso blanco/amarillo -->
+                        <stop offset="50%" stop-color="#B38728" />    <!-- Sombra del metal -->
+                        <stop offset="75%" stop-color="#FBF5B7" />    <!-- Reflejo secundario -->
+                        <stop offset="100%" stop-color="#AA771C" />   <!-- Borde oscuro inferior -->
+                        </linearGradient>
+
+                        <!-- Borde dorado para dar más volumen -->
+                        <linearGradient id="bordeDorado" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#5c3805" />
+                        <stop offset="50%" stop-color="#FFEA73" />
+                        <stop offset="100%" stop-color="#5c3805" />
+                        </linearGradient>
+
+                        <!-- Sombra para que despegue del fondo -->
+                        <filter id="sombraBrillante" x="-20%" y="-20%" width="140%" height="140%">
+                        <feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#000000" flood-opacity="0.6"/>
+                        </filter>
+                    </defs>
+
+                    <!-- Los textos -->
+                    <text x="400" y="150" class="texto-2">Padrinos</text>
+                </svg>
+                <img class="separador-decorativo animate-on-scroll" src="1_separador.webp" alt="separador">
+                <p class="texto nombres-familiares animate-on-scroll">Luz Negrete<br>&<br>Rafael Negrete</p>
+            </section>
+
+            <!-- Flores decorativas laterales -->
+            <div class="side-flower-container">
+                <img src="flor2.webp" alt="Decoración floral" class="animate-slide-in-left" style="width: 70px;">
+                <img src="flor2.webp" alt="Decoración floral" class="animate-slide-in-right" style="width: 70px;">
+            </div>
+
+            <!-- MARK: UBICACIONES -->
+            <section>
+                <!-- Ceremonia -->
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="100%">
+                        <defs>
+                            <!-- Gradiente super brillante (Efecto metálico pulido) -->
+                            <linearGradient id="superDorado" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#BF953F" />     <!-- Oro base -->
+                            <stop offset="30%" stop-color="#FCF6BA" />    <!-- Brillo intenso blanco/amarillo -->
+                            <stop offset="50%" stop-color="#B38728" />    <!-- Sombra del metal -->
+                            <stop offset="75%" stop-color="#FBF5B7" />    <!-- Reflejo secundario -->
+                            <stop offset="100%" stop-color="#AA771C" />   <!-- Borde oscuro inferior -->
+                            </linearGradient>
+    
+                            <!-- Borde dorado para dar más volumen -->
+                            <linearGradient id="bordeDorado" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#5c3805" />
+                            <stop offset="50%" stop-color="#FFEA73" />
+                            <stop offset="100%" stop-color="#5c3805" />
+                            </linearGradient>
+    
+                            <!-- Sombra para que despegue del fondo -->
+                            <filter id="sombraBrillante" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#000000" flood-opacity="0.6"/>
+                            </filter>
+                        </defs>
+    
+                        <!-- Los textos -->
+                        <text x="400" y="150" class="texto-2">Iglesia</text>
+                    </svg>
+
+                <a href="https://www.google.com/maps/place/Parroquia+Santa+Mar%C3%ADa+Estrella+del+Mar/@32.5272382,-117.1153855,21z/data=!4m6!3m5!1s0x80d94ba54ffaa40b:0x9c39a137fd013264!8m2!3d32.527228!4d-117.115309!16s%2Fg%2F1td00s83?entry=ttu&g_ep=EgoyMDI2MDcyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="lugar-link animate-on-scroll">
+                    <img src="foto_iglesia.jpg" alt="Foto de la Parroquia Santa María Estrella del Mar">
+                    <h4 class="nombre-lugar">Parroquia Santa María Estrella del Mar</h4>
+                    <p class="direccion-lugar">P.º Ensenada 950, Playas de Tijuana, de Tijuana, 22206 Tijuana, B.C.</p>
+                    <p class="hora-lugar">05:00 PM</p>
+                    <div class="button" style="margin-top: 25px;">Ir al Mapa</div>
+                </a>
+
+                <!-- Recepción -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="100%">
+                    <defs>
+                        <!-- Gradiente super brillante (Efecto metálico pulido) -->
+                        <linearGradient id="superDorado" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#BF953F" />     <!-- Oro base -->
+                        <stop offset="30%" stop-color="#FCF6BA" />    <!-- Brillo intenso blanco/amarillo -->
+                        <stop offset="50%" stop-color="#B38728" />    <!-- Sombra del metal -->
+                        <stop offset="75%" stop-color="#FBF5B7" />    <!-- Reflejo secundario -->
+                        <stop offset="100%" stop-color="#AA771C" />   <!-- Borde oscuro inferior -->
+                        </linearGradient>
+
+                        <!-- Borde dorado para dar más volumen -->
+                        <linearGradient id="bordeDorado" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#5c3805" />
+                        <stop offset="50%" stop-color="#FFEA73" />
+                        <stop offset="100%" stop-color="#5c3805" />
+                        </linearGradient>
+
+                        <!-- Sombra para que despegue del fondo -->
+                        <filter id="sombraBrillante" x="-20%" y="-20%" width="140%" height="140%">
+                        <feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#000000" flood-opacity="0.6"/>
+                        </filter>
+                    </defs>
+
+                    <!-- Los textos -->
+                    <text x="400" y="150" class="texto-2">Lugar del Evento</text>
+                </svg>
+
+                <a href="https://www.google.com/maps/place/Salones,+Patios+y+Jardines+Del+Sol/@32.5175952,-117.1210473,19z/data=!4m6!3m5!1s0x80d94bac635ec41d:0xe8d34d914915267a!8m2!3d32.5175952!4d-117.1198564!16s%2Fg%2F1tdz9q8h?entry=ttu&g_ep=EgoyMDI2MDcyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="lugar-link animate-on-scroll">
+                    <img src="foto_local.jpg" alt="Foto del Salon Gastronomico">
+                    <h4 class="nombre-lugar">Salones, Patios y Jardines Del Sol</h4>
+                    <p class="direccion-lugar">P.º Playas de Tijuana 2026, Playas de Tijuana, Jardines del Sol, 22505 Tijuana, B.C.</p>
+                    <p class="hora-lugar">08:00 PM</p>
+                    <div class="button" style="margin-top: 25px;">Ir al Mapa</div>
+                </a>
+            </section>
+
+            <!-- Flores decorativas laterales -->
+            <div class="side-flower-container">
+                <img src="flor2.webp" alt="Decoración floral" class="animate-slide-in-left" style="width: 70px;">
+                <img src="flor2.webp" alt="Decoración floral" class="animate-slide-in-right" style="width: 70px;">
+            </div>
+
+            <!-- MARK: ITINERARIO Y CÓDIGO DE VESTIMENTA -->
+            <section>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="100%">
+                    <defs>
+                        <!-- Gradiente super brillante (Efecto metálico pulido) -->
+                        <linearGradient id="superDorado" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#BF953F" />     <!-- Oro base -->
+                        <stop offset="30%" stop-color="#FCF6BA" />    <!-- Brillo intenso blanco/amarillo -->
+                        <stop offset="50%" stop-color="#B38728" />    <!-- Sombra del metal -->
+                        <stop offset="75%" stop-color="#FBF5B7" />    <!-- Reflejo secundario -->
+                        <stop offset="100%" stop-color="#AA771C" />   <!-- Borde oscuro inferior -->
+                        </linearGradient>
+
+                        <!-- Borde dorado para dar más volumen -->
+                        <linearGradient id="bordeDorado" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#5c3805" />
+                        <stop offset="50%" stop-color="#FFEA73" />
+                        <stop offset="100%" stop-color="#5c3805" />
+                        </linearGradient>
+
+                        <!-- Sombra para que despegue del fondo -->
+                        <filter id="sombraBrillante" x="-20%" y="-20%" width="140%" height="140%">
+                        <feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#000000" flood-opacity="0.6"/>
+                        </filter>
+                    </defs>
+
+                    <!-- Los textos -->
+                    <text x="400" y="150" class="texto-2">Programa del Evento</text>
+                </svg>
+                <div class="itinerario-item animate-on-scroll">
+                    <div class="itinerario-icono">
+                        <img src="buffet.webp" alt="Icono de Buffet">
+                    </div>
+                    <p class="texto"><strong>Cena:</strong> 08:30 PM - 09:30 PM</p>
+                </div>
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="100%">
+                    <defs>
+                        <!-- Gradiente super brillante (Efecto metálico pulido) -->
+                        <linearGradient id="superDorado" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#BF953F" />     <!-- Oro base -->
+                        <stop offset="30%" stop-color="#FCF6BA" />    <!-- Brillo intenso blanco/amarillo -->
+                        <stop offset="50%" stop-color="#B38728" />    <!-- Sombra del metal -->
+                        <stop offset="75%" stop-color="#FBF5B7" />    <!-- Reflejo secundario -->
+                        <stop offset="100%" stop-color="#AA771C" />   <!-- Borde oscuro inferior -->
+                        </linearGradient>
+
+                        <!-- Borde dorado para dar más volumen -->
+                        <linearGradient id="bordeDorado" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#5c3805" />
+                        <stop offset="50%" stop-color="#FFEA73" />
+                        <stop offset="100%" stop-color="#5c3805" />
+                        </linearGradient>
+
+                        <!-- Sombra para que despegue del fondo -->
+                        <filter id="sombraBrillante" x="-20%" y="-20%" width="140%" height="140%">
+                        <feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#000000" flood-opacity="0.6"/>
+                        </filter>
+                    </defs>
+
+                    <!-- Los textos -->
+                    <text x="400" y="150" class="texto-2">Codigo de Vestimenta</text>
+                </svg>
+                <div class="itinerario-item animate-on-scroll" style="flex-direction: column;">
+                    <div class="itinerario-icono"><img src="vestimenta.webp" alt="Icono de Vestimenta"></div>
+                    <h2 class="person-name">Formal</h2>
+                    <p class="texto">El color <strong>rojo</strong> queda reservado exclusivamente para la quinceañera.</p>
+                </div>
+            </section>
+
+            <!-- Flores decorativas laterales -->
+            <div class="side-flower-container">
+                <img src="flor2.webp" alt="Decoración floral" class="animate-slide-in-left" style="width: 70px;">
+                <img src="flor2.webp" alt="Decoración floral" class="animate-slide-in-right" style="width: 70px;">
+            </div>
+            
+            <!-- MARK: LLUVIA DE SOBRES Y BUZÓN -->
+            <section class="animate-on-scroll">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="100%">
+                    <defs>
+                        <!-- Gradiente super brillante (Efecto metálico pulido) -->
+                        <linearGradient id="superDorado" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#BF953F" />     <!-- Oro base -->
+                        <stop offset="30%" stop-color="#FCF6BA" />    <!-- Brillo intenso blanco/amarillo -->
+                        <stop offset="50%" stop-color="#B38728" />    <!-- Sombra del metal -->
+                        <stop offset="75%" stop-color="#FBF5B7" />    <!-- Reflejo secundario -->
+                        <stop offset="100%" stop-color="#AA771C" />   <!-- Borde oscuro inferior -->
+                        </linearGradient>
+
+                        <!-- Borde dorado para dar más volumen -->
+                        <linearGradient id="bordeDorado" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#5c3805" />
+                        <stop offset="50%" stop-color="#FFEA73" />
+                        <stop offset="100%" stop-color="#5c3805" />
+                        </linearGradient>
+
+                        <!-- Sombra para que despegue del fondo -->
+                        <filter id="sombraBrillante" x="-20%" y="-20%" width="140%" height="140%">
+                        <feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#000000" flood-opacity="0.6"/>
+                        </filter>
+                    </defs>
+
+                    <!-- Los textos -->
+                    <text x="400" y="150" class="texto-2">Regalos</text>
+                </svg>
+                <p style="font-size: 3rem; margin: 0;">🎁</p>
+                <p class="texto">El mejor regalo es tu presencia, pero si deseas obsequiarme algo, puedes hacerlo en la</p>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="100%">
+                    <defs>
+                        <!-- Gradiente super brillante (Efecto metálico pulido) -->
+                        <linearGradient id="superDorado" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#BF953F" />     <!-- Oro base -->
+                        <stop offset="30%" stop-color="#FCF6BA" />    <!-- Brillo intenso blanco/amarillo -->
+                        <stop offset="50%" stop-color="#B38728" />    <!-- Sombra del metal -->
+                        <stop offset="75%" stop-color="#FBF5B7" />    <!-- Reflejo secundario -->
+                        <stop offset="100%" stop-color="#AA771C" />   <!-- Borde oscuro inferior -->
+                        </linearGradient>
+
+                        <!-- Borde dorado para dar más volumen -->
+                        <linearGradient id="bordeDorado" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#5c3805" />
+                        <stop offset="50%" stop-color="#FFEA73" />
+                        <stop offset="100%" stop-color="#5c3805" />
+                        </linearGradient>
+
+                        <!-- Sombra para que despegue del fondo -->
+                        <filter id="sombraBrillante" x="-20%" y="-20%" width="140%" height="140%">
+                        <feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#000000" flood-opacity="0.6"/>
+                        </filter>
+                    </defs>
+
+                    <!-- Los textos -->
+                    <text x="400" y="150" class="texto-2">Lluvia de Sobres</text>
+                </svg>
+                <p class="texto">Es la tradición de regalar dinero en efectivo dentro de un sobre.</p>
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="100%">
+                    <defs>
+                        <!-- Gradiente super brillante (Efecto metálico pulido) -->
+                        <linearGradient id="superDorado" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#BF953F" />     <!-- Oro base -->
+                        <stop offset="30%" stop-color="#FCF6BA" />    <!-- Brillo intenso blanco/amarillo -->
+                        <stop offset="50%" stop-color="#B38728" />    <!-- Sombra del metal -->
+                        <stop offset="75%" stop-color="#FBF5B7" />    <!-- Reflejo secundario -->
+                        <stop offset="100%" stop-color="#AA771C" />   <!-- Borde oscuro inferior -->
+                        </linearGradient>
+
+                        <!-- Borde dorado para dar más volumen -->
+                        <linearGradient id="bordeDorado" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#5c3805" />
+                        <stop offset="50%" stop-color="#FFEA73" />
+                        <stop offset="100%" stop-color="#5c3805" />
+                        </linearGradient>
+
+                        <!-- Sombra para que despegue del fondo -->
+                        <filter id="sombraBrillante" x="-20%" y="-20%" width="140%" height="140%">
+                        <feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#000000" flood-opacity="0.6"/>
+                        </filter>
+                    </defs>
+
+                    <!-- Los textos -->
+                    <text x="400" y="150" class="texto-2">Buzon de deseos</text>
+                </svg>
+                <p class="texto">Si quieres dejarme un lindo mensaje por mis XV, puedes hacerlo aquí:</p>
+                <textarea id="mensajeInput" placeholder="Escribe tu mensaje aquí..."></textarea>
+                <!-- REEMPLAZA ESTOS NÚMEROS (LADA y NÚMERO) POR TU NÚMERO DE WHATSAPP -->
+                <button class="button" onclick="enviarMensajeWApp('1', '6198878388')">Enviar por WhatsApp</button>
+            </section>
+
+            <!-- Flores decorativas laterales -->
+            <div class="side-flower-container">
+                <img src="flor2.webp" alt="Decoración floral" class="animate-slide-in-left" style="width: 70px;">
+                <img src="flor2.webp" alt="Decoración floral" class="animate-slide-in-right" style="width: 70px;">
+            </div>
+            
+            <!-- MARK: CONFIRMACIÓN DE ASISTENCIA -->
+            <section class="animate-on-scroll">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="100%">
+                    <defs>
+                        <!-- Gradiente super brillante (Efecto metálico pulido) -->
+                        <linearGradient id="superDorado" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#BF953F" />     <!-- Oro base -->
+                        <stop offset="30%" stop-color="#FCF6BA" />    <!-- Brillo intenso blanco/amarillo -->
+                        <stop offset="50%" stop-color="#B38728" />    <!-- Sombra del metal -->
+                        <stop offset="75%" stop-color="#FBF5B7" />    <!-- Reflejo secundario -->
+                        <stop offset="100%" stop-color="#AA771C" />   <!-- Borde oscuro inferior -->
+                        </linearGradient>
+
+                        <!-- Borde dorado para dar más volumen -->
+                        <linearGradient id="bordeDorado" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#5c3805" />
+                        <stop offset="50%" stop-color="#FFEA73" />
+                        <stop offset="100%" stop-color="#5c3805" />
+                        </linearGradient>
+
+                        <!-- Sombra para que despegue del fondo -->
+                        <filter id="sombraBrillante" x="-20%" y="-20%" width="140%" height="140%">
+                        <feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#000000" flood-opacity="0.6"/>
+                        </filter>
+                    </defs>
+
+                    <style>
+                        /* Como el SVG está directo en el HTML, ahora sí tomará la fuente Great Vibes */
+                        
+                    </style>
+
+                    <!-- Los textos -->
+                    <text x="400" y="150" class="texto-2">Confirmar Asistencia</text>
+                </svg>
+                <form onsubmit="return confirmarAsistencia(event)">
+                    <label for="familia" class="texto">Nombre y Apellido:</label><br>
+                    <input type="text" id="familia" maxlength="30" required>
+
+                    <div class="confirmation-options">
+                        <label class="texto" style="display: block; margin-bottom: 10px;">Confirmo que:</label>
+                        <div class="radio-option">
+                            <input type="radio" id="asistire" name="confirmacion" value="asistire" checked>
+                            <label for="asistire" class="radio-label">Asistiré</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="noAsistire" name="confirmacion" value="noAsistire">
+                            <label for="noAsistire" class="radio-label">No Asistiré</label>
+                        </div>
+                    </div>
+
+                    <br>
+                    <button type="submit" class="button">Confirmar por WhatsApp</button>
+                </form>
+            </section>
+        </div>
+    </div> <!-- Cierre de background-container -->
+
+
+    <!-- MARK: SCRIPTS DE FUNCIONALIDAD -->
+    <script>
+        // 1. Lógica del Contador (29 de Agosto de 2026 a las 20:00 - 8 PM)
+        const fechaEvento = new Date("Aug 29, 2026 20:00:00").getTime();
+        
+        const intervalo = setInterval(function() {
+            const ahora = new Date().getTime();
+            const distancia = fechaEvento - ahora;
+
+            const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = dias;
+            document.getElementById("hours").innerText = horas;
+            document.getElementById("minutes").innerText = minutos;
+            document.getElementById("seconds").innerText = segundos;
+
+            if (distancia < 0) {
+                clearInterval(intervalo);
+                document.getElementById("days").innerText = "0";
+                document.getElementById("hours").innerText = "0";
+                document.getElementById("minutes").innerText = "0";
+                document.getElementById("seconds").innerText = "0";
+            }
+        }, 1000);
+
+        // 2. Lógica de Envío de Mensaje (Buzón)
+        function enviarMensajeWApp(lada, numero) {
+            var mensaje = document.getElementById('mensajeInput').value;
+            if(!mensaje) return alert("Por favor escribe un mensaje primero.");
+            var url = "https://api.whatsapp.com/send?phone=" + lada + numero + "&text=" + encodeURIComponent(mensaje);
+            window.open(url, '_blank');
+        }
+
+        const numeroConfirmacion = "6198878388"; 
+
+        function confirmarAsistencia(event) {
+            event.preventDefault();
+            var nombre = document.getElementById("familia").value;
+            var asistire = document.getElementById("asistire").checked;
+
+            var mensajeCA = asistire 
+                ? `Hola, soy ${nombre} y confirmo mi asistencia a los XV años de Renata.` 
+                : `Hola, soy ${nombre} y lamentablemente, no podré asistir a los XV años de Renata.`;
+
+            //var confirmacion = confirm(asistire ? "¿Estás seguro de confirmar tu asistencia?" : "¿Estás seguro de que no podrás asistir?");
+
+            //if (confirmacion) {
+                var urlCA = "https://api.whatsapp.com/send?phone=1" + numeroConfirmacion + "&text=" + encodeURIComponent(mensajeCA);
+                window.open(urlCA, '_blank').focus();
+            //}
+            return false;
+        }
+
+        // Lógica de Animación al Hacer Scroll
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Para que la animación ocurra solo una vez
+                    }
+                });
+            }, {
+                threshold: 0.1 // La animación se dispara cuando el 10% del elemento es visible
+            });
+
+            // Observar todos los elementos que deben animarse
+            const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+            const elementsToAnimateSides = document.querySelectorAll('.animate-slide-in-left, .animate-slide-in-right');
+            
+            elementsToAnimate.forEach(el => observer.observe(el)); // Observa elementos con animación de subida
+            elementsToAnimateSides.forEach(el => observer.observe(el)); // Observa las flores con animación lateral
+        });
+    </script>
+</body>
+</html>
