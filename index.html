@@ -276,6 +276,29 @@
             border-radius: 50%;
             background-color: var(--color-rojo-pastel);
         }
+
+        /* Botón de Audio Flotante */
+        #fixed-items {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        #toggleButton {
+            background: var(--color-principal);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            color: var(--color-texto-botones);
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         /* Estilos de la nueva sección de ubicaciones */
         .lugar-link {
             display: block;
@@ -301,6 +324,71 @@
         .lugar-link .hora-lugar {
             font-weight: bold;
             font-size: 1.3rem;
+        }
+
+        /* --- Estilos para la Cubierta de la Invitación --- */
+        .cover-panel {
+            position: fixed; /* Vuelve a ser fijo para ocupar la pantalla */
+            left: 0;
+            width: 100%;
+            height: 50%; /* La altura sigue siendo la mitad de la ventana */
+            background-color: #D1C1AB;
+            z-index: 9998; /* Un z-index menor que el botón */
+            box-sizing: border-box; /* Para que el borde no afecte el tamaño total */
+            transition: transform 1.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        #cover-top {
+            bottom: 50%; /* Ancla el panel al centro para que crezca hacia arriba */
+            border-bottom: 1px solid var(--color-rojo-pastel);
+        }
+
+        #cover-bottom {
+            top: 50%; /* Ancla el panel al centro para que crezca hacia abajo */
+            border-top: 1px solid var(--color-rojo-pastel);
+        }
+
+        /* Clases para animar la apertura */
+        #cover-top.opened {
+            transform: translateY(-100%);
+        }
+        #cover-bottom.opened {
+            transform: translateY(100%);
+        }
+
+        #play-button-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Centrado perfecto */
+            z-index: 10000; /* Por encima de los paneles */
+            transition: opacity 0.5s ease;
+        }
+
+        .play-button {
+            width: 100px;
+            height: 100px;
+            background-color: var(--color-crema-claro); /* Fondo color crema */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border: 3px solid var(--color-rojo-pastel); /* Borde rojo más grueso */
+            transition: transform 0.3s ease;
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+
+        .play-icon {
+            width: 0;
+            height: 0;
+            border-top: 25px solid transparent;
+            border-bottom: 25px solid transparent;
+            border-left: 40px solid var(--color-rojo-pastel); /* Ícono rojo */
+            margin-left: 10px;
         }
 
         /* --- Animaciones al hacer scroll --- */
@@ -383,6 +471,15 @@
     </style>
 </head>
 <body>
+
+    <!-- MARK: CUBIERTA INICIAL -->
+    <div id="cover-top" class="cover-panel"></div>
+    <div id="cover-bottom" class="cover-panel"></div>
+    <div id="play-button-container">
+        <div class="play-button" id="cover-play-button">
+            <div class="play-icon"></div>
+        </div>
+    </div>
 
     <!-- Nuevo contenedor para el fondo -->
     <div class="background-container">
@@ -908,6 +1005,16 @@
         </div>
     </div> <!-- Cierre de background-container -->
 
+    <!-- MARK: REPRODUCTOR DE MÚSICA FLOTANTE -->
+    <div id="fixed-items">
+        <button id="toggleButton" onclick="toggleAudio()">
+            🎵
+        </button>
+        <!-- REEMPLAZA EL SRC CON LA RUTA DE TU CANCIÓN -->
+        <audio id="music" loop>
+            <source src="EbrioDeAmor-EfectoGalante.mp3" type="audio/mpeg">
+        </audio>
+    </div>
 
     <!-- MARK: SCRIPTS DE FUNCIONALIDAD -->
     <script>
@@ -964,6 +1071,92 @@
             //}
             return false;
         }
+
+        // 4. Lógica de Reproductor de Audio
+        var reproductor = document.getElementById("music");
+        var botonAudio = document.getElementById("toggleButton");
+        var estaReproduciendo = false;
+
+        function toggleAudio() {
+            if (estaReproduciendo) {
+                reproductor.pause();
+                botonAudio.innerHTML = "🔇";
+            } else {
+                reproductor.play();
+                botonAudio.innerHTML = "🎵";
+            }
+            estaReproduciendo = !estaReproduciendo;
+        }
+        
+        // Iniciar audio con la primera interacción del usuario
+        const coverTop = document.getElementById('cover-top');
+        const coverBottom = document.getElementById('cover-bottom');
+        const coverPlayButton = document.getElementById('cover-play-button');
+        const playButtonContainer = document.getElementById('play-button-container');
+
+        // Bloquear scroll al inicio
+        document.body.style.overflow = 'hidden';
+
+        playButtonContainer.addEventListener('click', () => {
+            // Desactivamos el botón para evitar múltiples clics
+            coverPlayButton.style.pointerEvents = 'none';
+
+            // 1. Ocultar el botón de play
+            playButtonContainer.style.opacity = '0';
+
+            // 2. Iniciar la animación de apertura de las cubiertas INMEDIATAMENTE
+            coverTop.classList.add('opened');
+            coverBottom.classList.add('opened');
+
+            // 3. Iniciar la música
+            if (reproductor.paused) {
+                reproductor.volume = 0.5; // Establece el volumen al 70%
+                toggleAudio();
+            }
+
+            // 4. Limpiar todo y activar animaciones después de la apertura
+            setTimeout(() => {
+                document.body.style.overflow = 'auto';
+                // Ocultamos todos los elementos de la cubierta
+                playButtonContainer.style.display = 'none';
+                coverTop.style.display = 'none';
+                coverBottom.style.display = 'none';
+
+                // 5. Lógica de Animación al Hacer Scroll (INICIA AHORA)
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target); // Para que la animación ocurra solo una vez
+                        }
+                    });
+                }, {
+                    threshold: 0.1 // La animación se dispara cuando el 10% del elemento es visible
+                });
+
+                // Observar todos los elementos que deben animarse
+                const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+                const elementsToAnimateSides = document.querySelectorAll('.animate-slide-in-left, .animate-slide-in-right');
+                
+                elementsToAnimate.forEach(el => observer.observe(el)); // Observa elementos con animación de subida
+                elementsToAnimateSides.forEach(el => observer.observe(el)); // Observa las flores con animación lateral
+            }, 1800); // Sincronizado con la duración de la animación de las cubiertas
+        });
+
+        // 5. Lógica para pausar la música si la pestaña no está visible
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                // Si la música estaba sonando, la pausamos temporalmente
+                if (estaReproduciendo) {
+                    reproductor.pause();
+                }
+            } else {
+                // Si la música debería estar sonando, la reanudamos
+                if (estaReproduciendo) {
+                    reproductor.play();
+                }
+            }
+        });
 
         // Lógica de Animación al Hacer Scroll
         document.addEventListener('DOMContentLoaded', () => {
